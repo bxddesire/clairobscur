@@ -909,48 +909,6 @@ ul#notif_list {
 }
 
 /*** ------------------------------- ***/
-/*** BARRE DE NAVIGATION ----------- ***/
-
-/* Conteneur de la barre de nav */
-.navbar {
-  background: var(--neutralDark);
-  border-radius: 5px;
-  margin-top: 10px;
-  padding: 10px;
-  display: flex;
-  /* permet de mettre les liens sur une ligne */
-  align-items: center;
-  /*centre verticalement*/
-  justify-content: center;
-  /*centre horizontalement*/
-  display: none;
-}
-
-/* Suppression des liens peu utilisés*/
-.navbar a[href^="/faq"],/*faq*/
-.navbar a[href^="/calendar"],/*calendrier*/
-.navbar a[href^="/groups"],/*groupes*/
-.navbar a[href^="/images"]/*Dernières images*/ {
-  display: none;
-}
-
-/* liens de navigation */
-a.mainmenu {
-  padding: 5px;
-}
-
-/* Lien navigation au survol*/
-a.mainmenu:hover {
-  background: var(--neutral);
-  border-radius: 5px;
-}
-
-/* Image des liens */
-a.mainmenu img {
-  display: none;
-}
-
-/*** ------------------------------- ***/
 /*** ANNONCES DEFILANTES ----------- ***/
 
 /* Barre défilante */
