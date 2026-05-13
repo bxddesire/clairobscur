@@ -140,7 +140,7 @@ a {
 
 /*liens au survol*/
 a:hover {
-  color: var(--accentClr);
+  color: var(--color1);
 }
 
 /* Emoji mis par défaut de FA
