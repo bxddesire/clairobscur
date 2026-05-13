@@ -2388,22 +2388,3 @@ ul#fa_menulist, ul#notif_list {
 .profile-panel-content.active {
     display: block; /* Affiché uniquement si actif */
 }
-
-#FAM-button-open {
-    position: fixed;
-    color: var(--color1);
-    font-size: 18px;
-    background-color: var(--neutralDark);
-    border-radius: 10px;
-    width: 45px;
-    height: 45px;
-    right: 0 !important;
-    bottom: 0 !important;
-    cursor: pointer;
-    transition-property: right;
-    transition-duration: 500ms;
-    display: grid;
-    place-items: center;
-  left:unset;
-  top: unset;
-}
