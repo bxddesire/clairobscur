@@ -651,7 +651,10 @@ ul#notif_list {
 /* BARRE SWITCHEROO --- */
 /* BARRE --- */
 .switcheroo {
-  color: var(--textColor);
+    color: var(--textColor);
+    bottom: 10px;
+    position: fixed;
+    right: 10px;
 }
 
 /* Positionnement des ronds */
