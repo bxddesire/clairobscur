@@ -2163,186 +2163,264 @@ form[name="form_login"] .content {
 #fa_toolbar {
   display:none; }
 
-/*test*/
-/* Position fixe en haut à droite */
-#crystal-menu {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    z-index: 999;
+/* <b style="color:#aa0000" class="coloradmin">Notiffi</b> CSS */
+/* Cache la toolbar défaut */
+#fa_toolbar {display: none}
+
+/* Bouton de notification */
+#notiffi_button {
+ cursor: pointer;
+ background: var(--neutral);
+ border-radius: 10px;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ padding: 5px 10px;
+ position: fixed;
+ z-index: 99;
+ top: 10px;
+ right: 10px;
+ height: 35px;
 }
 
-/* Conteneur des losanges */
-.crystal-group {
-	position: relative;
-	width: 75px;
-	height: 75px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+/* Conteneur du nombre de notification non lues REMPLI */
+.unread_count {
+ position: relative;
+ background: var(--neutralDarker);
+ border-radius: 5px;
+ width: 25px;
+ display: grid;
+ place-items: center;
+ font-weight: 600;
+ font-size: 12px;
+ scale: 1;
+ opacity: 1;
+ aspect-ratio: 1;
+ transition: scale ease-out .2s;
 }
 
-/* Style des losanges */
-.crystal-item {
-	position: absolute;
-	width: 27px;
-	height: 27px;
-	background: var(--color1);
-	transform: rotate(45deg);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: transform 0.3s ease, background 0.3s ease, width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
-	cursor: pointer;
-}
-
-/* Ajustement des icônes */
-.crystal-item i {
-    transform: rotate(-45deg); /* Pour que les icônes restent droites */
-    color: white;
-    font-size: 18px;
-}
-
-/* Placement pour former le grand losange */
-#menu-toggle { top: 26px; left: 7px; }
-#menu-notifications { top: 27px; left: 42px; }
-#menu-profile { top: 44px; left: 25px; }
-#menu-messages { top: 9px; left: 24px; }
-
-/* Animation au hover : agrandir et écarter légèrement */
-.crystal-group:hover .crystal-item {
-	width: 35px;
-	height: 35px;
-}
-
-/* Espacement doux */
-.crystal-group:hover #menu-notifications { transform: rotate(45deg) translate(10px, -10px); }
-.crystal-group:hover #menu-profile { transform: rotate(45deg) translate(10px, 10px); }
-.crystal-group:hover #menu-messages { transform: rotate(45deg) translate(-10px, -10px); }
-.crystal-group:hover #menu-toggle { transform: rotate(45deg) translate(-10px, 10px); }
-
-/* Effet de pulsation sur le losange survolé */
-.crystal-item:hover {
-    animation: pulse 1.5s infinite;
-}
-
-/* Définition de l'animation de pulsation */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
-    50% { box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.3); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
-}
-
-/* Style de la pop-up */
-.crystal-tooltip {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    font-size: 12px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    white-space: nowrap;
-    transform: rotate(-45deg) translate(-50%, -120%); /* Annule la rotation */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-/* Affichage de la pop-up au hover */
-.crystal-item:hover .crystal-tooltip {
-    opacity: 1;
-    visibility: visible;
-}
-
-#notification-panel {
-    position: absolute;
-    top: 130px;  /* Ajuste selon tes besoins */
-    right: 0;
-    width: 300px;  /* Ajuste la largeur si nécessaire */
-    background: var(--couleur2);
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-    padding: 10px;
-    z-index: 999;
-    display: none;  /* Masqué par défaut */
-}
-
-/* S'assure que les notifications s'affichent correctement dans le panel */
-#notif_list {
-    position: relative !important;  /* Pour annuler un éventuel absolute */
-    left: auto !important;
-    top: auto !important;
-    margin: 0;
-    padding: 0;
-    width: 100%; /* S'étend bien dans le panel */
+/* Conteneur du nombre de notification non lues VIDE */
+.unread_count:empty {
+ position: absolute;
+ scale: 0;
+ opacity: 0;
+ transition: all ease-out .2s;
 }
 
 
-/* Ajustement du texte et liste */
-#notification-panel ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+
+/* Menu des notifications FERMÉ */
+#notiffi_panel {
+ --menuSize: 500px;
+ /* taille du Menu */
+ width: var(--menuSize);
+ position: fixed;
+ z-index: 98;
+ top: 0;
+ height: 100%;
+ right: calc(var(--menuSize) * -1);
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ align-items: start;
+ background: var(--neutral);
+ border-left: 1px solid var(--neutralDark);
+ padding: 15px;
+ padding-top: 50px;
+ opacity: 0;
+ visibility: hidden;
+ transition: all ease .7s;
 }
 
-#notification-panel li {
-    padding: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+/* Menu des notifications OUVERT */
+#notiffi_panel.open {
+ right: 0;
+ visibility: visible;
+ opacity: 1;
 }
 
-#notification-panel li:last-child {
-    border-bottom: none;
+/* Conteneur des notifications */
+.all_notifications {
+ width: 100%;
+ overflow: auto;
+ max-height: 100%;
+ background: var(--neutralDark);
+ padding: 10px;
+ border-radius: 10px;
+ -ms-overflow-style: none;
+ scrollbar-width: none;
+
+ /* Désactive la barre de défilement dans le contenenur */
+ &::-webkit-scrollbar {
+   display: none;
+ }
 }
 
-ul#fa_menulist, ul#notif_list {
-  display: block !important; }
-
-#profile-panel {
-    position: absolute;
-    top: 130px;  /* Ajuste selon tes besoins */
-    right: 0;
-    width: 375px;  /* Ajuste la largeur selon le menu */
-    background: var(--couleur2);
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-    padding: 10px;
-    z-index: 999;
-    display: none;  /* Masqué par défaut */
+/* Conteneur des notifications VIDE */
+.no_notification {
+ text-align: center;
+ font-style: italic;
 }
 
-
-#fa_menulist {
-    position: static !important; /* Annule toute position absolue */
-    width: 100%; /* S'assurer qu'il prend toute la largeur de son panel */
+/* Conteneur du footer du menu 
+  (voir toutes les notifications, marquer comme lu, tout supprimer) */
+.notiffi_manage {
+ width: 100%;
+ display: flex;
+ justify-content: space-between;
 }
 
-#profile-tabs {
-    display: flex;
-    border-bottom: 2px solid var(--couleur1);
+/* Conteneur des bouton d'action des notifications */
+.notiffi_actions {
+ display: grid;
+ justify-items: end;
+ gap: 5px;
+
+ /* Bouton d'action */
+ button {
+   padding: 2px 10px;
+   background: var(--neutralDark);
+   border-radius: 5px;
+
+   &:hover {
+     color: var(--accentClr)
+   }
+ }
 }
 
-.profile-tab {
-    flex: 1;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    background: var(--couleur2);
-    border: none;
-    outline: none;
-    font-weight: bold;
-    transition: background 0.3s ease;
+/* Apparence d'une notification */
+.notification {
+ display: flex;
+ gap: 15px;
+ margin-bottom: 5px;
+ padding: 10px;
+ border-radius: 5px;
+ border: 1px solid transparent;
+ transition: border .2s;
+ animation: notiffiFadeIn 0.3s ease-in-out;
+
+ /* Notification au survol */
+ &:hover {
+   border-color: var(--neutralDarker);
+ }
 }
 
-.profile-tab.active {
-    background: var(--couleur1);
-    color: white;
+/* Animation d'apparition des notifications */
+@keyframes notiffiFadeIn {
+ from {
+   opacity: 0;
+ }
+
+ to {
+   opacity: 1;
+ }
 }
 
-.profile-panel-content {
-    display: none; /* Masqué par défaut */
-    padding: 10px;
+/* Apparence d'une notification NON LUE */
+.notification.unread {
+ background-color: var(--neutral);
 }
 
-.profile-panel-content.active {
-    display: block; /* Affiché uniquement si actif */
+/* Conteneur des détails de la notification (avatar, icone) */
+.notif_details {
+ position: relative;
+ align-self: start;
+}
+
+/* Conteneur de l'avatar */
+.notif_avatar {
+ background: var(--neutral);
+ height: 35px;
+ border-radius: 5px;
+ aspect-ratio: 1;
+
+ /* Image de l'avatar */
+ & img {
+   width: 100%;
+   aspect-ratio: 1;
+   object-fit: cover;
+   object-position: center;
+   border-radius: 5px;
+ }
+}
+
+/* Icone du type de la notification */
+.notif_icon {
+ position: absolute;
+ bottom: -5px;
+ right: -5px;
+ background: var(--neutral);
+ width: 18px;
+ aspect-ratio: 1;
+ display: grid;
+ place-items: center;
+ border-radius: 20px;
+ font-size: 10px;
+}
+
+/* Icone lorsque la notification est non lue */
+.notification.unread .notif_icon {
+ color: var(--neutral);
+ background: var(--accentClr);
+}
+
+/* Conteneur du texte et la date de la notification */
+.notif_content {
+ width: 100%;
+}
+
+/* Date de la notification */
+.notif_time {
+ font-size: var(--little-size);
+ opacity: .8;
+ margin-top: 5px;
+}
+
+/* Bouton de suppression de la notification */
+.notif_close {
+ background: transparent;
+ align-self: start;
+ font-size: 18px;
+ line-height: 0;
+ opacity: 0;
+ border-radius: 100px;
+ aspect-ratio: 1;
+ padding: 2px;
+ transition: all .3s;
+}
+
+/* Affiche le bouton de suppression au survol de la notification */
+.notification:hover .notif_close {
+ opacity: 1
+}
+
+/* Alerte d'une notification */
+.notification.alert {
+ position: fixed;
+ width: 400px;
+ align-items: center;
+ z-index: 99;
+ bottom: 10px;
+ right: 10px;
+ background: var(--neutralDarker);
+ transform: translateY(100%);
+ opacity: 0;
+ filter: blur(5px);
+ transition: all .5s ease-in-out;
+}
+
+.notification.alert.up {
+ transform: translateY(0%);
+ opacity: 1;
+ filter: blur(0);
+ transition: all .5s ease-in-out;
+}
+
+.alert_close {
+ background: var(--neutral);
+ font-size: 18px;
+ line-height: 0;
+ border-radius: 100px;
+ aspect-ratio: 1;
+ padding: 2px;
 }
