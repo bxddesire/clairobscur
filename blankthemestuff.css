@@ -2161,14 +2161,7 @@ form[name="form_login"] .content {
   border-radius: 5px;
 }
 
-
-
-#fa_toolbar {
-  display:none; }
-
 /* <b style="color:#aa0000" class="coloradmin">Notiffi</b> CSS */
-/* Cache la toolbar défaut */
-#fa_toolbar {display: none}
 
 /* Bouton de notification */
 #notiffi_button {
